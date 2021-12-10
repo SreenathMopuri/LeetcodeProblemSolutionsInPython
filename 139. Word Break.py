@@ -46,3 +46,30 @@ public:
         return find(s,0,wordDict); 
     }
 };
+
+C++
+----
+class Solution {
+public:
+  
+    bool wordBreak(string s, vector<string>& wordDict) {
+        // whether substring s[0:i) can be represented by dictionary
+        vector<bool> dp(s.size() + 1, false); // size from 0 to size
+        
+        dp[0] = true;
+        for (int i = 1; i <= s.size(); i++)
+        {
+            for (auto word: wordDict)
+            {
+                if (i >= word.size() && dp[i-word.size()])
+                {
+                    if (s.substr(i-word.size(), word.size()).compare(word) == 0)
+                    {
+                        dp[i] = true;
+                    }
+                }
+            }
+        }
+        return dp[s.size()];
+    }
+};
